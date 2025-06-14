@@ -53,7 +53,10 @@ def create_conversational_rag_chain(api_key: str):
     llm = ChatGoogleGenerativeAI(
         model=LLM_MODEL, 
         google_api_key=api_key, # Dùng key được truyền vào
-        temperature=0.3
+        temperature=0.3,
+        top_p=0.8,
+        top_k=40,
+        convert_system_message_to_human=True, 
     )
     
     conversational_chain = ConversationalRetrievalChain.from_llm(

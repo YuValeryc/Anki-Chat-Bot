@@ -10,7 +10,6 @@ import os
 from src.rag_chain import create_conversational_rag_chain 
 from src.gradio_ui import create_modern_interface
 
-# --- Bỏ khởi tạo RAG chain toàn cục ---
 
 # --- 2. ĐỊNH NGHĨA CÁC HÀM XỬ LÝ MỚI ---
 def save_key_and_init_chain(api_key: str, state: dict):
