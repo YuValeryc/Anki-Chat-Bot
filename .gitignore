@@ -1,0 +1,14 @@
+# Ignore Python virtual environment directories
+venv/
+
+# Ignore Python bytecode files
+.env
+
+# Ignore data files
+data/
+
+# Ignore craw_data
+craw_data.py
+
+# Ignore Python cache files
+__pycache__/ 
