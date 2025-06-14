@@ -5,69 +5,72 @@ import gradio as gr
 custom_css = """
 /* Bảng màu từ hình ảnh bạn cung cấp */
 :root {
-    --bg-main: #f0f4f8;             /* Màu nền xám nhạt bên ngoài cùng */
-    --bg-sidebar: #111827;          /* Màu nền sidebar xanh đen */
-    --bg-chat-window: #ffffff;      /* Màu nền cửa sổ chat trắng */
-    --bg-chat-bubble-user: #3b82f6;  /* Màu bong bóng chat của người dùng, xanh dương */
-    --bg-chat-bubble-bot: #1f2937;   /* Màu bong bóng chat của bot, xám nhạt */
-    --bg-input: #ffffff;            /* Màu nền của ô input */
-    --text-color-sidebar: #d1d5db;   /* Màu chữ trên sidebar */
-    --text-color-primary: #1f2937;   /* Màu chữ chính (đen) */
-    --text-color-user-bubble: #ffffff; /* Màu chữ trong bong bóng user */
+    --bg-main: #f0f4f8;
+    --bg-sidebar: #111827;
+    --bg-chat-window: #ffffff;
+    --bg-chat-bubble-user: #3b82f6;
+    --bg-chat-bubble-bot: #1f2937;
+    --bg-input: #ffffff;
+    --text-color-sidebar: #d1d5db;
+    --text-color-primary: #1f2937;
+    --text-color-user-bubble: #ffffff;
     --border-color: #e5e7eb;
 }
 
-
-/* --- Các style được cập nhật màu sắc --- */
-body {
-    padding: 0 !important;
-    margin: 0 !important;
-}
-gradio-app {
-    height: 100vh !important;
-    overflow: hidden;
-}
-#main-container {
-    background-color: var(--bg-main) !important; /* Đổi màu nền chính */
-    color: var(--text-color-primary) !important;
-    height: 100%;
-    width: 100%;
+body, html {
     padding: 0;
     margin: 0;
-    display: flex;
-    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
 }
+
+gradio-app {
+    height: 100vh !important;
+    width: 100vw !important;
+}
+
+#main-container {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    background-color: var(--bg-main);
+    color: var(--text-color-primary);
+}
+
 .gradio-container {
-    background-color: transparent !important;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
 }
 
 #sidebar {
-    background-color: var(--bg-sidebar) !important; /* Đổi màu sidebar */
-    padding: 8px;
-    height: 100%;
-    min-height: 100vh;
-    border-right: 1px solid var(--border-color) !important; /* Đổi màu đường viền */
-}
-#new-chat-button {
-    background-color: var(--bg-chat-bubble-user) !important; /* Đổi màu nút */
-    color: var(--text-color-user-bubble) !important;
-    border: none !important;
-}
-#new-chat-button:hover {
-    background-color: #2563eb !important; /* Màu hover đậm hơn */
+    background-color: var(--bg-sidebar);
+    padding: 16px;
+    width: 250px;
+    flex-shrink: 0;
+    color: var(--text-color-sidebar);
+    overflow-y: auto;
+    border-right: 1px solid var(--border-color);
 }
 
 #chat-container {
     display: flex;
     flex-direction: column;
+    flex: 1;
     height: 100vh;
+    overflow: hidden;
+    background-color: var(--bg-chat-window);
     padding: 1rem;
-    background-color: var(--bg-chat-window) !important; /* Đổi màu nền cửa sổ chat */
 }
+
 #chatbot {
     flex-grow: 1;
-    overflow-y: auto !important;
-    background-color: transparent !important; /* Chatbot trong suốt trên nền trắng */
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    min-height: 0; /* QUAN TRỌNG để không đẩy input xuống */
 }
 #chatbot .user, #chatbot .bot {
     border-radius: 8px;
@@ -75,96 +78,139 @@ gradio-app {
     box-shadow: none;
 }
 #chatbot .user {
-    background-color: var(--bg-chat-bubble-user) !important; /* Đổi màu bong bóng user */
-    color: var(--text-color-user-bubble) !important;
+    background-color: var(--bg-chat-bubble-user);
+    color: var(--text-color-user-bubble);
 }
 #chatbot .bot {
-     background-color: var(--bg-chat-bubble-bot) !important; /* Đổi màu bong bóng bot */
-     color: var(--text-color-primary) !important;
+    background-color: var(--bg-chat-bubble-bot);
+    color: var(--text-color-primary);
 }
 
 #input-container {
-    border-radius: 12px !important;
-    border: 1px solid var(--border-color) !important; /* Đổi màu viền input */
-    background-color: var(--bg-input) !important; /* Đổi màu nền input */
+    display: flex;
+    flex-shrink: 0; /* Ngăn bị ẩn khi thiếu chỗ */
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-input);
     margin: 0 auto;
-    max-width: 768px;
+    max-width: 800px;
     width: 100%;
     padding: 0.5rem;
+    box-sizing: border-box;
 }
+
 #input-textbox {
-    background-color: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    color: var(--text-color-primary) !important;
+    flex: 1;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    color: var(--text-color-primary);
+    font-size: 1rem;
 }
 
 #send-button {
-    background-color: var(--bg-chat-bubble-user) !important; /* Đổi màu nút gửi */
-    color: var(--text-color-user-bubble) !important;
-    border: none !important;
-    min-width: 40px !important;
-    border-radius: 8px !important;
+    background-color: var(--bg-chat-bubble-user);
+    color: var(--text-color-user-bubble);
+    border: none;
+    border-radius: 8px;
+    padding: 0 16px;
+    margin-left: 8px;
+    height: 40px;
 }
 #send-button:hover {
-    background-color: #2563eb !important;
+    background-color: #2563eb;
+}
+
+#new-chat-button:hover{
+    background-color: #2563eb;
+}
+#save-key-button {
+    background-color: #22c55e;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+}
+#save-key-button:hover {
+    background-color: #16a34a;
+}
+
+.error { color: #ef4444; }
+.success { color: #22c55e; }
+
+@media screen and (max-width: 1024px) {
+    #sidebar {
+        width: 200px;
+    }
+    #input-container {
+        max-width: 95%;
+    }
 }
 """
 
 # HÀM create_modern_interface VÀ CÁC THÀNH PHẦN BÊN TRONG GIỮ NGUYÊN 100%
-# NHƯ FILE BAN ĐẦU BẠN GỬI
-def create_modern_interface(user_fn, bot_fn):
-    """Tạo giao diện hiện đại giống ChatGPT bằng gr.Blocks."""
+def create_modern_interface(save_key_fn, user_fn, bot_fn):
+    """Tạo giao diện giống ChatGPT với ô nhập API Key."""
     
-    with gr.Blocks(theme="soft", css=custom_css, elem_id="main-container") as interface:
-        with gr.Row():
-            with gr.Column(scale=1, elem_id="sidebar"):
+    with gr.Blocks(theme="soft", css=custom_css, elem_id="main-container", title="Anki Chat Bot") as interface:
+        # State để lưu RAG chain cho mỗi phiên người dùng
+        session_state = gr.State({})
+
+        with gr.Row(equal_height=True):
+            with gr.Column(scale=1, min_width=250, elem_id="sidebar"):
+                gr.Markdown("<h1 style='color: white;'>Anki RAG Bot</h1>")
+                
+                # --- PHẦN THÊM VÀO ---
+                with gr.Column():
+                    api_key_textbox = gr.Textbox(
+                        label="Google Gemini API Key",
+                        placeholder="Dán API Key của bạn vào đây...",
+                        type="password", lines=1, elem_id="api-key-textbox"
+                    )
+                    save_key_button = gr.Button("Lưu & Kích hoạt Key", elem_id="save-key-button")
+                    status_display = gr.Markdown("<p style='color: orange;'>Vui lòng nhập API Key để bắt đầu.</p>")
+                
+                gr.Markdown("<hr style='border-color: #374151;'>")
                 new_chat_btn = gr.Button("+ Đoạn chat mới", elem_id="new-chat-button")
 
             with gr.Column(scale=4, elem_id="chat-container"):
                 chatbot = gr.Chatbot(
                     elem_id="chatbot",
-                    label="Anki RAG Chatbot",
+                    type='messages',
+                    container=False,
+                    show_label=False,
                     avatar_images=(None, "http://127.0.0.1:8000/assets/images/chatbot.png"),
                     bubble_full_width=False,
-                    type='messages',
-                    show_label=False,
-                    container=False,
-                    height=120
                 )
                 
                 with gr.Row(elem_id="input-container"):
                     textbox = gr.Textbox(
                         show_label=False,
                         placeholder="Hỏi bất cứ điều gì về Anki...",
-                        container=False,
-                        scale=7,
-                        elem_id="input-textbox"
+                        container=False, scale=7, elem_id="input-textbox"
                     )
                     send_btn = gr.Button("⬆️", scale=1, elem_id="send-button")
 
-        # --- ĐỊNH NGHĨA CHUỖI SỰ KIỆN ---
-        action_event = send_btn.click(
-            fn=user_fn,
-            inputs=[textbox, chatbot],
-            outputs=[chatbot, textbox]
-        ).then(
-            fn=bot_fn,
-            inputs=chatbot,
-            outputs=chatbot
-        )
-        
-        submit_event = textbox.submit(
-            fn=user_fn,
-            inputs=[textbox, chatbot],
-            outputs=[chatbot, textbox]
-        ).then(
-            fn=bot_fn,
-            inputs=chatbot,
-            outputs=chatbot
+        # --- ĐỊNH NGHĨA HÀNH VI MỚI ---
+        save_key_button.click(
+            fn=save_key_fn,
+            inputs=[api_key_textbox, session_state],
+            outputs=[status_display, session_state]
         )
 
-        # Xử lý nút "Đoạn chat mới"
+        send_btn.click(
+            fn=user_fn, inputs=[textbox, chatbot], outputs=[chatbot, textbox]
+        ).then(
+            fn=bot_fn, inputs=[chatbot, session_state], outputs=[chatbot]
+        )
+        
+        textbox.submit(
+            fn=user_fn, inputs=[textbox, chatbot], outputs=[chatbot, textbox]
+        ).then(
+            fn=bot_fn, inputs=[chatbot, session_state], outputs=[chatbot]
+        )
+
         new_chat_btn.click(lambda: [], None, [chatbot])
         
     return interface

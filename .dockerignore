@@ -1,0 +1,17 @@
+# Môi trường ảo của Python
+venv
+
+# Cache của Python
+__pycache__
+*.pyc
+
+# Cấu hình IDE và Git
+.git
+.gitignore
+
+# File Docker
+Dockerfile
+.dockerignore
+
+# Biến môi trường
+.env
