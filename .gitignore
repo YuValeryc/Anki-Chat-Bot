@@ -8,7 +8,7 @@ venv/
 data/
 
 # Ignore craw_data
-craw_data.py
+src/craw_data.py
 
 # Ignore Python cache files
 __pycache__/ 

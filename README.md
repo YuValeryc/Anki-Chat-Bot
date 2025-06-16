@@ -2,6 +2,10 @@
 
 An intelligent chatbot powered by RAG (Retrieval-Augmented Generation) that provides detailed answers about Anki, the popular flashcard application.
 
+## 💡 Demo
+
+![Demo](assets/demo.gif)
+
 ## Features
 
 - 🤖 Conversational AI interface for Anki-related questions

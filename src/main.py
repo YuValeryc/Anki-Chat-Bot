@@ -17,7 +17,7 @@ def save_key_and_init_chain(api_key: str, state: dict):
     if not api_key or not "AIza" in api_key:
         state['rag_chain'] = None
         # SỬA LỖI: Trả về Markdown trước, sau đó là state
-        return gr.Markdown("<p style='color: #F87171;'>Vui lòng nhập API Key hợp lệ.</p>"), state
+        return gr.Markdown("<p style='color: #F87171;'>Vui lòng nhập API Key hợp lệ. Hãy truy cập <a href='https://aistudio.google.com/apikey'>AISTUDIO</a> để lấy API key.</p>"), state
     
     print("Đã nhận API Key, bắt đầu khởi tạo RAG chain...")
     try:
@@ -30,7 +30,7 @@ def save_key_and_init_chain(api_key: str, state: dict):
         print(f"Lỗi khi khởi tạo RAG chain: {e}")
         state['rag_chain'] = None
         # SỬA LỖI: Trả về Markdown trước, sau đó là state
-        return gr.Markdown(f"<p style='color: #F87171;'>❌ Lỗi: API Key không hợp lệ hoặc có sự cố.</p>"), state
+        return gr.Markdown(f"<p style='color: #F87171;'>❌ Lỗi: API Key không hợp lệ hoặc có sự cố. Hãy truy cập <a href='https://aistudio.google.com/apikey'>AISTUDIO</a> để lấy API key.</p>"), state
 
 def add_user_message(message: str, history: list):
     """Bước 1: Thêm tin nhắn người dùng vào lịch sử."""
